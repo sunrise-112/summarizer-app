@@ -1,8 +1,8 @@
-import { prisma } from "../../server/prisma/lib/prisma.js";
+import { reviewService } from "../services/review.service.js";
 
 export const reviewsController = {
   getAll: async (req, res) => {
-    const reviews = await prisma.review.findMany();
+    const reviews = await reviewService.getAll();
 
     res.status(200).json({
       success: true,
@@ -10,26 +10,24 @@ export const reviewsController = {
       data: reviews,
     });
   },
-  getById: async (req, res) => {
+
+  getProductReviews: async (req, res) => {
     const productId = Number(req.params.id);
     if (isNaN(productId))
       return res.status(400).json({
         error: "Product Id is required!",
       });
 
-    const fetchedReview = await prisma.review.findFirst({
-      where: { productId },
-    });
-
-    if (!fetchedReview)
+    const fetchedReviews = await reviewService.getProductReviews(productId);
+    if (!fetchedReviews)
       return res
         .status(404)
-        .json({ error: "Product with given ID was not found!" });
+        .json({ error: "Reviews for given product ID was not found!" });
 
     res.status(200).json({
       success: true,
-      message: "Review fetched successfully!",
-      data: fetchedReview,
+      message: "Reviews fetched successfully!",
+      data: fetchedReviews,
     });
   },
 };

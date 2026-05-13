@@ -5,6 +5,6 @@ const router = express.Router();
 import { reviewsController } from "../controllers/reviews.controller.js";
 
 router.get("/all", reviewsController.getAll);
-router.get("/:id/reviews", reviewsController.getById);
+router.get("/:id/reviews", reviewsController.getProductReviews);
 
 export default router;
