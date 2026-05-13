@@ -1,0 +1,2 @@
+Summarize reviews in one short paragraph, focusing on positive and negative aspects. 
+{{reviews}}
